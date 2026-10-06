@@ -1,0 +1,99 @@
+
+:root {
+    --kmitl-orange: #FF5F00;
+    --kmitl-orange-hover: #e05300;
+    --kmitl-dark: #1e2125;
+    --bg-color: #f3f4f6;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+/* Navbar แต่งสไตล์เด่น */
+.navbar-kmitl {
+    background: linear-gradient(135deg, var(--kmitl-orange), #ff7a28);
+    box-shadow: 0 4px 15px rgba(255, 95, 0, 0.25);
+}
+
+/* การ์ดและดีไซน์ความนุ่มนวล */
+.card-custom {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    background: #ffffff;
+    transition: all 0.3s ease;
+}
+
+/* Custom Input Focus (วงสีส้มเวลาคลิกช่องกรอก) */
+.form-control:focus, .form-select:focus {
+    border-color: var(--kmitl-orange);
+    box-shadow: 0 0 0 0.25rem rgba(255, 95, 0, 0.18);
+}
+
+/* ปุ่มกดโทน สจล. */
+.btn-kmitl {
+    background-color: var(--kmitl-orange);
+    color: white;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 12px;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.btn-kmitl:hover {
+    background-color: var(--kmitl-orange-hover);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 95, 0, 0.3);
+}
+
+/* Smooth Transition สำหรับการซ่อน/แสดงช่องใส่รหัสเครื่อง */
+.animated-box {
+    transition: all 0.35s ease-in-out;
+    opacity: 1;
+    max-height: 200px;
+    overflow: hidden;
+}
+
+.animated-box.hidden {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0;
+    pointer-events: none;
+}
+
+/* Console Log ทรง Hacker/Terminal */
+.log-console {
+    background-color: #121316;
+    color: #33ff77;
+    font-family: 'Consolas', 'Courier New', monospace;
+    height: 180px;
+    overflow-y: auto;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 0.88rem;
+    border: 1px solid #2a2d32;
+}
+
+/* ไฟสถานะกระพริบ */
+.pulse-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #00ff66;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 8px #00ff66;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
