@@ -1,25 +1,24 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KMITL ESP32 Pager Control Center</title>
-    <!-- Bootstrap 5 CSS & FontAwesome Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8"> <!--ฟรอนต์ไทย-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--ยืดจอ Desktop,Moblie-->
+    <title>KMITL ESP32 Pager Web Page</title>
     
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> <!--bootstrab framework-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <!--ดึง icon มาใช้-->
+    
+    <!-- เชื่อมโยงไปยังไฟล์ CSS นอก -->
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <!-- Header / Navbar -->
-    <nav class="navbar navbar-kmitl mb-4">
-        <div class="container d-flex justify-content-between align-items-center py-1">
+    <!--Navbar-->
+    <nav class="navbar navbar-kmitl mb-4">  
+        <div class="container py-1">
             <span class="navbar-brand mb-0 h1 fw-bold text-white d-flex align-items-center gap-2">
-                <i class="fa-solid fa-pager fs-4"></i> KMITL ESP32 PAGER CENTER
-            </span>
-            <span class="badge bg-light text-dark d-flex align-items-center gap-2 px-3 py-2 rounded-pill">
-                <span class="pulse-dot"></span> System Online
+                <i class="fa-solid fa-pager fs-4"></i> KMITL ESP32 PAGER WEB PAGE
             </span>
         </div>
     </nav>
@@ -49,21 +48,19 @@
                         </select>
                     </div>
 
-                    <!-- 3. รหัสเครื่องปลายทาง (จะถูกซ่อนถ้าเลือก 1:ALL) -->
+                    <!-- 3. รหัสเครื่องปลายทาง -->
                     <div id="targetContainer" class="col-md-6 animated-box">
                         <label class="form-label fw-semibold">รหัสเครื่องปลายทาง:</label>
                         <select id="targetIdSelect" name="target_id" class="form-select">
                             <option value="PAG-01">เครื่องที่ 1 (PAG-01)</option>
                             <option value="PAG-02">เครื่องที่ 2 (PAG-02)</option>
                             <option value="PAG-03">เครื่องที่ 3 (PAG-03)</option>
-                            <option value="PAG-04">เครื่องที่ 4 (PAG-04)</option>
-                            <option value="PAG-05">เครื่องที่ 5 (PAG-05)</option>
                             <option value="OTHER">อื่นๆ (ระบุเอง)</option>
                         </select>
                     </div>
                 </div>
 
-                <!-- ช่องพิมพ์ระบุเอง (จะซ่อนไว้ก่อน ขึ้นมาเฉพาะตอนเลือก 'อื่นๆ') -->
+                <!-- ช่องพิมพ์ระบุเอง -->
                 <div id="customTargetContainer" class="mb-3 animated-box hidden">
                     <label class="form-label fw-semibold text-primary">ระบุรหัสเครื่องเอง:</label>
                     <input type="text" id="customTargetInput" name="custom_target_id" class="form-control" placeholder="พิมพ์รหัส เช่น PAG-99">
@@ -71,27 +68,14 @@
 
                 <!-- ปุ่มส่งข้อความ -->
                 <button type="submit" id="submitBtn" class="btn btn-kmitl w-100 fs-6 mt-2">
-                    <i class="fa-solid fa-satellite-dish me-2"></i> สั่งการ / ส่งข้อความ
+                    <i class="fa-solid fa-satellite-dish me-2"></i> ส่งข้อความ
                 </button>
             </form>
         </div>
 
-        <!-- ช่องแสดง Log สถานะการทำงาน -->
-        <div class="card card-custom p-4 mb-5">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6 class="fw-bold m-0 text-dark d-flex align-items-center gap-2">
-                    <i class="fa-solid fa-terminal text-secondary"></i> ช่องแสดงการทำงานระบบ (Activity Log)
-                </h6>
-                <button id="clearLogBtn" class="btn btn-sm btn-outline-danger">
-                    <i class="fa-solid fa-trash-can me-1"></i> Clear Log
-                </button>
-            </div>
-            <div id="logConsole" class="log-console">
-                <div>[SYSTEM] พร้อมใช้งาน ระบบมอนิเตอร์ออนไลน์...</div>
-            </div>
-        </div>
-
     </div>
+
+    <!-- ไว้เชื่อมJs-->
     <script src="script.js"></script>
 </body>
 </html>
