@@ -44,11 +44,22 @@
                     <!-- 2. รูปแบบการส่ง -->
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">เลือกผู้รับ:</label>
-                        <select id="sendModeSelect" name="send_mode" class="form-select" required>
-                            <option value="1_TO_1">ส่งเฉพาะรายบุคคล (1:1)</option>
-                            <option value="1_TO_SOME">ส่งหลายคน (1:N)</option>
-                            <option value="1_TO_ALL">ส่งหาทุกคน (1:ALL)</option>
-                        </select>
+                        
+                        <!-- [ส่วนที่เพิ่มใหม่: เปลี่ยนจาก <select> เป็น Custom Dropdown เพื่อให้หน้าตาเหมือน Checkbox Dropdown] -->
+                        <div class="custom-select-container" id="sendModeDropdown">
+                            <button type="button" class="custom-select-trigger d-flex justify-content-between align-items-center" id="sendModeToggle">
+                                <span id="sendModeLabel">ส่งเฉพาะรายบุคคล (1:1)</span>
+                                <i id="sendModeChevron" class="fa-solid fa-chevron-down text-muted small chevron-icon"></i>
+                            </button>
+                            <div class="custom-select-menu" id="sendModeMenu">
+                                <div class="custom-option selected" data-value="1_TO_1">ส่งเฉพาะรายบุคคล (1:1)</div>
+                                <div class="custom-option" data-value="1_TO_SOME">ส่งหลายคน (1:N)</div>
+                                <div class="custom-option" data-value="1_TO_ALL">ส่งหาทุกคน (1:ALL)</div>
+                            </div>
+                            <input type="hidden" id="sendModeSelect" name="send_mode" value="1_TO_1" required>
+                        </div>
+                        <!-- [จบส่วนที่เพิ่มใหม่] -->
+
                     </div>
 
                     <!-- 3. รหัสเครื่องปลายทาง -->
@@ -57,12 +68,23 @@
                         
                         <!-- 3.1 Dropdown เลือกเครื่องเดียว (1:1) -->
                         <div id="selectbox" class="selectbox">
-                            <select id="targetIdSelect" name="target_id" class="form-select">
-                                <option value="PAG-01">เครื่องที่ 1 (PAG-01)</option>
-                                <option value="PAG-02">เครื่องที่ 2 (PAG-02)</option>
-                                <option value="PAG-03">เครื่องที่ 3 (PAG-03)</option>
-                                <option value="OTHER">อื่นๆ (ระบุเอง)</option>
-                            </select>
+                            
+                            <!-- [ส่วนที่เพิ่มใหม่: เปลี่ยนจาก <select> เป็น Custom Dropdown เพื่อให้สไตล์กล่องลอยขอบมนเหมือนกัน] -->
+                            <div class="custom-select-container" id="targetIdDropdown">
+                                <button type="button" class="custom-select-trigger d-flex justify-content-between align-items-center" id="targetIdToggle">
+                                    <span id="targetIdLabel">เครื่องที่ 1 (PAG-01)</span>
+                                    <i id="targetIdChevron" class="fa-solid fa-chevron-down text-muted small chevron-icon"></i>
+                                </button>
+                                <div class="custom-select-menu" id="targetIdMenu">
+                                    <div class="custom-option selected" data-value="PAG-01">เครื่องที่ 1 (PAG-01)</div>
+                                    <div class="custom-option" data-value="PAG-02">เครื่องที่ 2 (PAG-02)</div>
+                                    <div class="custom-option" data-value="PAG-03">เครื่องที่ 3 (PAG-03)</div>
+                                    <div class="custom-option" data-value="OTHER">อื่นๆ (ระบุเอง)</div>
+                                </div>
+                                <input type="hidden" id="targetIdSelect" name="target_id" value="PAG-01">
+                            </div>
+                            <!-- [จบส่วนที่เพิ่มใหม่] -->
+
                         </div>
 
                         <!-- 3.2 Checkbox Dropdown เลือกหลายเครื่อง (1:N / SOME) -->

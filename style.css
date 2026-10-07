@@ -146,10 +146,10 @@ body {
     cursor: pointer;
     user-select: none;
     transition: background-color 0.15s ease;
-        font-size: 0.95rem;
-    }
+    font-size: 0.95rem;
+}
 
-    /*ติ๊กถูกตอนใส่*/
+/*ติ๊กถูกตอนใส่*/
 .checkbox-item:hover {
     background-color: rgba(255, 95, 0, 0.08);
 }
@@ -171,3 +171,86 @@ body {
     padding: 3px 8px;
     border-radius: 5px;
 }
+
+/* ==================================================== */
+/* [ส่วนที่เพิ่มใหม่: CSS ตกแต่ง Custom Select ให้หน้าตาและอนิเมชันตรงกับ Checkbox Dropdown] */
+/* ==================================================== */
+.custom-select-container {
+    position: relative;
+    background: #ffffff;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    padding: 6px 12px;
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.custom-select-container:hover {
+    border-color: var(--kmitl-orange);
+}
+
+.custom-select-container.active {
+    border-color: var(--kmitl-orange);
+    box-shadow: 0 0 0 0.25rem rgba(255, 95, 0, 0.18);
+}
+
+.custom-select-trigger {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #212529;
+}
+
+.custom-select-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    padding: 6px;
+    z-index: 1050;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
+
+.custom-select-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.custom-option {
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 0.95rem;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.custom-option:hover {
+    background-color: rgba(255, 95, 0, 0.08);
+    color: var(--kmitl-orange);
+}
+
+.custom-option.selected {
+    background-color: var(--kmitl-orange);
+    color: white;
+    font-weight: 600;
+}
+/* ==================================================== */
+/* [จบส่วนที่เพิ่มใหม่] */
+/* ==================================================== */
