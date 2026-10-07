@@ -1,5 +1,7 @@
 //-- JavaScript สำหรับควบคุมระบบซ่อน/แสดง และจำลอง Log --
 
+api = "https://script.google.com/macros/s/AKfycbx6a5sSOdDSpwp-I0RL3xF-OfmMUKS9vyoDUj1Qjbts8ublbNR0yFRcTxebmgeo3BX_Rg/exec";
+
 // ดึง Element จาก HTML มาเตรียมใช้งาน
 const sendModeSelect = document.getElementById('sendModeSelect');
 const targetContainer = document.getElementById('targetContainer');
@@ -59,6 +61,16 @@ pagerForm.addEventListener('submit', function(e) {
     // ล็อคปุ่มส่งชั่วคราว (Cooldown) กันกดซ้ำ
     submitBtn.disabled = true;
     submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin me-2"></i> กำลังส่ง...`;
+
+    fetch(api, {
+        method: "post",
+        contentType : "application/json",
+        body: JSON.stringify({
+            message: msg,
+            send_mode: mode,
+            target_id: target
+        })
+    })
 
     // แสดง Log: กำลังส่ง...
     addLog(`กำลังส่งข้อความ: "${msg}" ไปยัง [${target}]...`, 'SENDING');
