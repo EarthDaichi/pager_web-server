@@ -33,10 +33,11 @@
             </h5>
             
             <form id="pagerForm">
-                <!-- 1. ข้อความ -->
+                <!-- 1.ข้อความ (จำกัดMax 80)-->
                 <div class="mb-3">
                     <label class="form-label fw-semibold">ข้อความที่ต้องการส่ง:</label>
-                    <textarea id="messageInput" name="message" class="form-control" rows="3" placeholder="พิมพ์ข้อความที่ต้องการส่งออกอากาศ..." required></textarea>
+                    <textarea id="messageInput" name="message" class="form-control" rows="3" placeholder="พิมพ์ข้อความที่ต้องการส่งออกอากาศ..." maxlength="80" required></textarea>
+                    <div id="charCount" class="text-end text-muted small mt-1">0 / 80 ตัวอักษร</div>
                 </div>
 
                 <div class="row g-3 mb-3">
@@ -53,24 +54,43 @@
                     <!-- 3. รหัสเครื่องปลายทาง -->
                     <div id="targetContainer" class="col-md-6 animated-box">
                         <label class="form-label fw-semibold">เลือกเครื่องปลายทาง:</label>
-                        <!-- 3. รหัสเครื่องปลายทาง -->
-                        <div id="selectbox" class="selectbox animated-box">
-                        <select id="targetIdSelect" name="target_id" class="form-select">
-                            <option value="PAG-01">เครื่องที่ 1 (PAG-01)</option>
-                            <option value="PAG-02">เครื่องที่ 2 (PAG-02)</option>
-                            <option value="PAG-03">เครื่องที่ 3 (PAG-03)</option>
-                            <option value="OTHER">อื่นๆ (ระบุเอง)</option>
-                        </select>
+                        
+                        <!-- 3.1 Dropdown เลือกเครื่องเดียว (1:1) -->
+                        <div id="selectbox" class="selectbox">
+                            <select id="targetIdSelect" name="target_id" class="form-select">
+                                <option value="PAG-01">เครื่องที่ 1 (PAG-01)</option>
+                                <option value="PAG-02">เครื่องที่ 2 (PAG-02)</option>
+                                <option value="PAG-03">เครื่องที่ 3 (PAG-03)</option>
+                                <option value="OTHER">อื่นๆ (ระบุเอง)</option>
+                            </select>
                         </div>
+
+                        <!-- 3.2 Checkbox Dropdown เลือกหลายเครื่อง (1:N / SOME) -->
                         <div class="checkboxDropdown" id="CheckBoxDropdown">
-                            <button class="checkboxDropdownButton" id="toggleDropdown">เลือกเครื่อง
-                                <i id="downpointer" class="fa-solid fa-chevron-down text-muted small chevron-icon" id="chevronIcon"></i>
+                            <button type="button" class="checkboxDropdownButton d-flex justify-content-between align-items-center" id="toggleDropdown">
+                                <div id="selectedBadgesContainer" class="d-flex flex-wrap gap-1 align-items-center me-2">
+                                    <span id="dropdownLabelText" class="text-muted small">-- คลิกเพื่อเลือกเครื่อง --</span>
+                                </div>
+                                <i id="chevronIcon" class="fa-solid fa-chevron-down text-muted small chevron-icon"></i>
                             </button>
+                            
                             <div class="checkbox-dropdown-menu" id="checkboxDropdownMenu">
-                            <!-- 3.2 รหัสเครื่องปลายทางSome -->
-                                <label><input type="checkbox" name="target_id" value="PG-01">PAG-01</label>
-                                <label><input type="checkbox" name="target_id" value="PG-02">PAG-02</label>
-                                <label><input type="checkbox" name="target_id" value="PG-03">PAG-03</label>
+                                <div class="d-flex justify-content-between pb-2 mb-2 border-bottom px-2">
+                                    <button type="button" id="selectAllBtn" class="btn btn-link btn-sm p-0 text-decoration-none text-warning fw-semibold small">เลือกทั้งหมด</button>
+                                    <button type="button" id="clearAllBtn" class="btn btn-link btn-sm p-0 text-decoration-none text-muted small">ล้างค่า</button>
+                                </div>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" class="target-checkbox" name="target_id_some" value="PAG-01">
+                                    <span>PAG-01</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" class="target-checkbox" name="target_id_some" value="PAG-02">
+                                    <span>PAG-02</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" class="target-checkbox" name="target_id_some" value="PAG-03">
+                                    <span>PAG-03</span>
+                                </label>
                             </div>
                         </div>
                     </div>
