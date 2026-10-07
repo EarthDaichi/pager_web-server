@@ -29,7 +29,7 @@ export async function startMQTT() {
 }
 
 export function sendMessage(data){
-    //JSON.parse(data)
+    //const way = ["001","002","003"];
 
 
 
@@ -41,6 +41,6 @@ export function sendMessage(data){
 
 
     //client.publish("pager/message", JSON.stringify(data));
-    console.log(data)
+    console.log(data);
     return 1;
 }
