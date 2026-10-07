@@ -1,10 +1,28 @@
-document.addEventListener('DOMContentLoaded', () => {
+function loadMQTT() {
+    return new Promise((resolve, reject) => {
+
+        const script = document.createElement('script');
+
+        script.src = 'https://unpkg.com/mqtt/dist/mqtt.min.js';
+
+        script.onload = () => resolve();
+        script.onerror = () => reject(
+            new Error('โหลด MQTT.js ไม่สำเร็จ')
+        );
+
+        document.head.appendChild(script);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+
+    await loadMQTT();
 
     // ====================================================
     // เมื่อเพื่อนฝั่ง Backend ทำเสร็จ ให้เปลี่ยน URL ตรงนี้
     // เช่น 'http://192.168.1.50/api.php'
     // ====================================================
-    const api = 'wss://s1ad7df7.ala.asia-southeast1.emqxsl.com:8084/mqtt'; 
+    const client = mqtt.connect('wss://s1ad7df7.ala.asia-southeast1.emqxsl.com:8084/mqtt'); 
 
     // ดึง DOM Elements จากหน้า HTML
     const sendModeSelect = document.getElementById('sendModeSelect');
