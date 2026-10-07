@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // เมื่อเพื่อนฝั่ง Backend ทำเสร็จ ให้เปลี่ยน URL ตรงนี้
     // เช่น 'http://192.168.1.50/api.php'
     // ====================================================
-    const BACKEND_URL = 'http://YOUR_BACKEND_IP/api.php'; 
+    const api = 'http://172.16.8.30:1880/api/pager'; 
 
     // ดึง DOM Elements จากหน้า HTML
     const sendModeSelect = document.getElementById('sendModeSelect');
@@ -15,14 +15,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const messageInput = document.getElementById('messageInput');
     const pagerForm = document.getElementById('pagerForm');
     const submitBtn = document.getElementById('submitBtn');
+    const CheckBoxDropdown = document.getElementById('CheckBoxDropdown');
+CheckBoxDropdown.classList.add('hidden');
 
     // 1. ควบคุมการแสดงผลเมื่อเปลี่ยนรูปแบบการส่ง (1:1 หรือ 1:ALL)
     sendModeSelect.addEventListener('change', function() {
         if (this.value === '1_TO_ALL') {
             targetContainer.classList.add('hidden');
             customTargetContainer.classList.add('hidden');
-        } else {
+            CheckBoxDropdown.classList.remove('hidden');
+        } else if (this.value === '1_TO_SOME') {
             targetContainer.classList.remove('hidden');
+            CheckBoxDropdown.classList.remove('hidden');
+            if (targetIdSelect.value === 'OTHER') {
+                customTargetContainer.classList.remove('hidden');
+            }
+        } 
+        else {
+            targetContainer.classList.remove('hidden');
+            CheckBoxDropdown.classList.add('hidden');
             if (targetIdSelect.value === 'OTHER') {
                 customTargetContainer.classList.remove('hidden');
             }
@@ -57,10 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // แสดงสถานะกำลังส่ง (เปลี่ยนปุ่มเป็นหมุนๆ)
         setLoadingState(true);
-
+        console.log(formData);
         try {
             // ยิงข้อมูลไปยัง Backend ด้วยวิธี POST
-            const response = await fetch(BACKEND_URL, {
+            const response = await fetch(api, {
                 method: 'POST',
                 body: formData
             });
