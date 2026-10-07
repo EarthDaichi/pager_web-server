@@ -42,22 +42,33 @@
                 <div class="row g-3 mb-3">
                     <!-- 2. รูปแบบการส่ง -->
                     <div class="col-md-6">
-                        <label class="form-label fw-semibold">รูปแบบการส่ง:</label>
+                        <label class="form-label fw-semibold">เลือกผู้รับ:</label>
                         <select id="sendModeSelect" name="send_mode" class="form-select" required>
                             <option value="1_TO_1">ส่งเฉพาะรายบุคคล (1:1)</option>
+                            <option value="1_TO_SOME">ส่งหลายคน (1:N)</option>
                             <option value="1_TO_ALL">ส่งหาทุกคน (1:ALL)</option>
                         </select>
                     </div>
 
                     <!-- 3. รหัสเครื่องปลายทาง -->
                     <div id="targetContainer" class="col-md-6 animated-box">
-                        <label class="form-label fw-semibold">รหัสเครื่องปลายทาง:</label>
+                        <label class="form-label fw-semibold">เลือกเครื่องปลายทาง:</label>
+                        <!-- 3. รหัสเครื่องปลายทาง -->
                         <select id="targetIdSelect" name="target_id" class="form-select">
                             <option value="PAG-01">เครื่องที่ 1 (PAG-01)</option>
                             <option value="PAG-02">เครื่องที่ 2 (PAG-02)</option>
                             <option value="PAG-03">เครื่องที่ 3 (PAG-03)</option>
                             <option value="OTHER">อื่นๆ (ระบุเอง)</option>
                         </select>
+                        <div class="checkboxDropdown">
+                            <button type="submit" class="checkboxDropdownButton">เลือกเครื่อง</button>
+                            <div class="checkbox-dropdown-menu" id="checkboxDropdownMenu">
+                            <!-- 3.2 รหัสเครื่องปลายทางSome -->
+                                <label><input type="checkbox" name="target_id" value="PG-01">PAG-01</label>
+                                <label><input type="checkbox" name="target_id" value="PG-02">PAG-02</label>
+                                <label><input type="checkbox" name="target_id" value="PG-03">PAG-03</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
