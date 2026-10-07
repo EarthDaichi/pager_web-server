@@ -1,92 +1,100 @@
-//-- JavaScript สำหรับควบคุมระบบซ่อน/แสดง และจำลอง Log --
+document.addEventListener('DOMContentLoaded', () => {
 
-api = "https://script.google.com/macros/s/AKfycbx6a5sSOdDSpwp-I0RL3xF-OfmMUKS9vyoDUj1Qjbts8ublbNR0yFRcTxebmgeo3BX_Rg/exec";
+    // ====================================================
+    // เมื่อเพื่อนฝั่ง Backend ทำเสร็จ ให้เปลี่ยน URL ตรงนี้
+    // เช่น 'http://192.168.1.50/api.php'
+    // ====================================================
+    const BACKEND_URL = 'http://YOUR_BACKEND_IP/api.php'; 
 
-// ดึง Element จาก HTML มาเตรียมใช้งาน
-const sendModeSelect = document.getElementById('sendModeSelect');
-const targetContainer = document.getElementById('targetContainer');
-const targetIdSelect = document.getElementById('targetIdSelect');
-const customTargetContainer = document.getElementById('customTargetContainer');
-const pagerForm = document.getElementById('pagerForm');
-const submitBtn = document.getElementById('submitBtn');
-const logConsole = document.getElementById('logConsole');
-const clearLogBtn = document.getElementById('clearLogBtn');
+    // ดึง DOM Elements จากหน้า HTML
+    const sendModeSelect = document.getElementById('sendModeSelect');
+    const targetContainer = document.getElementById('targetContainer');
+    const targetIdSelect = document.getElementById('targetIdSelect');
+    const customTargetContainer = document.getElementById('customTargetContainer');
+    const customTargetInput = document.getElementById('customTargetInput');
+    const messageInput = document.getElementById('messageInput');
+    const pagerForm = document.getElementById('pagerForm');
+    const submitBtn = document.getElementById('submitBtn');
 
-function addLog(text, type = 'INFO') {
-    const time = new Date().toLocaleTimeString();
-    let colorClass = '#33ff77'; // สีเขียวปกติ
-    if (type === 'SENDING') colorClass = '#ffcc00'; // สีเหลืองกำลังส่ง
-    if (type === 'SUCCESS') colorClass = '#00ffff'; // สีฟ้าสำเร็จ
+    // 1. ควบคุมการแสดงผลเมื่อเปลี่ยนรูปแบบการส่ง (1:1 หรือ 1:ALL)
+    sendModeSelect.addEventListener('change', function() {
+        if (this.value === '1_TO_ALL') {
+            targetContainer.classList.add('hidden');
+            customTargetContainer.classList.add('hidden');
+        } else {
+            targetContainer.classList.remove('hidden');
+            if (targetIdSelect.value === 'OTHER') {
+                customTargetContainer.classList.remove('hidden');
+            }
+        }
+    });
 
-    const logLine = document.createElement('div');
-    logLine.style.color = colorClass;
-    logLine.innerText = `[${time}] [${type}] ${text}`;
-    logConsole.appendChild(logLine);
-    logConsole.scrollTop = logConsole.scrollHeight; // เลื่อน Log ลงล่างสุดอัตโนมัติ
-}
-
-// 1. Logic ซ่อน/แสดง กล่องเลือกเครื่อง (1:1 vs 1:ALL)
-sendModeSelect.addEventListener('change', function() {
-    if (this.value === '1_TO_ALL') {
-        targetContainer.classList.add('hidden'); // ซ่อนกล่องรหัสเครื่อง
-        customTargetContainer.classList.add('hidden'); // ซ่อนช่องระบุเองด้วย
-    } else {
-        targetContainer.classList.remove('hidden'); // โชว์กล่องรหัสเครื่อง
-        if (targetIdSelect.value === 'OTHER') {
+    // 2. ควบคุมการแสดงผลเมื่อเลือกรหัสเครื่องปลายทาง
+    targetIdSelect.addEventListener('change', function() {
+        if (this.value === 'OTHER' && sendModeSelect.value === '1_TO_1') {
             customTargetContainer.classList.remove('hidden');
+        } else {
+            customTargetContainer.classList.add('hidden');
+        }
+    });
+
+    // 3. ส่งข้อมูลหา Backend เมื่อกด Submit ปุ่มส่งข้อความ
+    pagerForm.addEventListener('submit', async function(e) {
+        e.preventDefault(); // ป้องกันหน้าเว็บรีเฟรช
+
+        // คำนวณหา Target ID ที่ถูกต้อง
+        const mode = sendModeSelect.value;
+        let target = (mode === '1_TO_ALL') ? 'ALL' : targetIdSelect.value;
+        if (mode === '1_TO_1' && target === 'OTHER') {
+            target = customTargetInput.value.trim() || 'UNKNOWN';
+        }
+
+        // แพ็กข้อมูลใส่ FormData (ส่งแบบ Form ปกติ เพื่อให้ฝั่ง PHP / Backend ดึงข้อมูลง่ายๆ)
+        const formData = new FormData();
+        formData.append('mode', mode);
+        formData.append('target_id', target);
+        formData.append('message', messageInput.value.trim());
+
+        // แสดงสถานะกำลังส่ง (เปลี่ยนปุ่มเป็นหมุนๆ)
+        setLoadingState(true);
+
+        try {
+            // ยิงข้อมูลไปยัง Backend ด้วยวิธี POST
+            const response = await fetch(BACKEND_URL, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP Status: ${response.status}`);
+            }
+
+            const result = await response.text();
+            alert('ส่งข้อความสำเร็จ!');
+            resetFormState();
+
+        } catch (error) {
+            console.error('Fetch Error:', error);
+            alert(`ส่งไม่สำเร็จ: ${error.message}`);
+        } finally {
+            // คืนค่าปุ่มให้กลับมากดได้เหมือนเดิม
+            setLoadingState(false);
+        }
+    });
+
+    // ฟังก์ชันเปลี่ยนสถานะปุ่มกด (เปิด/ปิด สปินเนอร์หมุนๆ)
+    function setLoadingState(isLoading) {
+        submitBtn.disabled = isLoading;
+        if (isLoading) {
+            submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin me-2"></i> กำลังส่ง...`;
+        } else {
+            submitBtn.innerHTML = `<i class="fa-solid fa-satellite-dish me-2"></i> ส่งข้อความ`;
         }
     }
-});
 
-// 2. Logic ซ่อน/แสดง ช่องระบุเอง เมื่อเลือก 'อื่นๆ'
-targetIdSelect.addEventListener('change', function() {
-    if (this.value === 'OTHER' && sendModeSelect.value === '1_TO_1') {
-        customTargetContainer.classList.remove('hidden');
-    } else {
-        customTargetContainer.classList.add('hidden');
+    // ฟังก์ชันล้างค่าหน้าฟอร์มเมื่อส่งสำเร็จ
+    function resetFormState() {
+        pagerForm.reset();
+        sendModeSelect.dispatchEvent(new Event('change'));
     }
-});
-
-// 3. Logic เมื่อกดปุ่ม "ส่งข้อความ" (จำลองการทำงานของ Fetch API)
-pagerForm.addEventListener('submit', function(e) {
-    e.preventDefault(); // ป้องกันหน้าเว็บรีเฟรช
-
-    const mode = sendModeSelect.value;
-    let target = (mode === '1_TO_ALL') ? 'ทุกเครื่อง (ALL)' : targetIdSelect.value;
-    if (target === 'OTHER') {
-        target = document.getElementById('customTargetInput').value || 'ไม่ระบุ';
-    }
-    const msg = document.getElementById('messageInput').value;
-
-    // ล็อคปุ่มส่งชั่วคราว (Cooldown) กันกดซ้ำ
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin me-2"></i> กำลังส่ง...`;
-
-    fetch(api, {
-        method: "post",
-        contentType : "application/json",
-        body: JSON.stringify({
-            message: msg,
-            send_mode: mode,
-            target_id: target
-        })
-    })
-
-    // แสดง Log: กำลังส่ง...
-    addLog(`กำลังส่งข้อความ: "${msg}" ไปยัง [${target}]...`, 'SENDING');
-
-    // จำลองว่าหลังบ้านตอบกลับมาใน 1.5 วินาที
-    setTimeout(() => {
-        // แสดง Log: ส่งสำเร็จ
-        addLog(`ส่งข้อความสำเร็จ! (Message published to MQTT)`, 'SUCCESS');
-        
-        // คืนค่าปุ่มส่ง
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = `<i class="fa-solid fa-satellite-dish me-2"></i> สั่งการ / ส่งข้อความ`;
-    }, 1500);
-});
-
-// 4. ล้าง Log
-clearLogBtn.addEventListener('click', function() {
-    logConsole.innerHTML = '<div>[SYSTEM] ล้างข้อมูล Log เรียบร้อย</div>';
 });
