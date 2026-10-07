@@ -4,36 +4,38 @@ document.addEventListener('DOMContentLoaded', () => {
     // เมื่อเพื่อนฝั่ง Backend ทำเสร็จ ให้เปลี่ยน URL ตรงนี้
     // เช่น 'http://192.168.1.50/api.php'
     // ====================================================
-    const api = 'http://172.16.8.30:1880/api/pager'; 
+    const api = 'wss://s1ad7df7.ala.asia-southeast1.emqxsl.com:8084/mqtt'; 
 
     // ดึง DOM Elements จากหน้า HTML
     const sendModeSelect = document.getElementById('sendModeSelect');
     const targetContainer = document.getElementById('targetContainer');
     const targetIdSelect = document.getElementById('targetIdSelect');
+    const targetId = document.getElementById('targetId');
     const customTargetContainer = document.getElementById('customTargetContainer');
     const customTargetInput = document.getElementById('customTargetInput');
     const messageInput = document.getElementById('messageInput');
     const pagerForm = document.getElementById('pagerForm');
     const submitBtn = document.getElementById('submitBtn');
     const CheckBoxDropdown = document.getElementById('CheckBoxDropdown');
-CheckBoxDropdown.classList.add('hidden');
+    const toggleDropdown = document.getElementById('toggleDropdown');
+    CheckBoxDropdown.classList.add('hide');
 
     // 1. ควบคุมการแสดงผลเมื่อเปลี่ยนรูปแบบการส่ง (1:1 หรือ 1:ALL)
     sendModeSelect.addEventListener('change', function() {
-        if (this.value === '1_TO_ALL') {
+        if (this.value === '1_TO_ALL') { //all
             targetContainer.classList.add('hidden');
-            customTargetContainer.classList.add('hidden');
-            CheckBoxDropdown.classList.remove('hidden');
-        } else if (this.value === '1_TO_SOME') {
+        } else if (this.value === '1_TO_SOME') { //some
             targetContainer.classList.remove('hidden');
-            CheckBoxDropdown.classList.remove('hidden');
-            if (targetIdSelect.value === 'OTHER') {
-                customTargetContainer.classList.remove('hidden');
-            }
+            CheckBoxDropdown.classList.remove('hide');
+            targetIdSelect.classList.add('hide');
+            toggleDropdown.addEventListener('click', function() {
+                console.log("67")
+            })
         } 
-        else {
+        else { //one
             targetContainer.classList.remove('hidden');
-            CheckBoxDropdown.classList.add('hidden');
+            targetIdSelect.classList.remove('hide');
+            CheckBoxDropdown.classList.add('hide');
             if (targetIdSelect.value === 'OTHER') {
                 customTargetContainer.classList.remove('hidden');
             }

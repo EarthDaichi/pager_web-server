@@ -54,14 +54,18 @@
                     <div id="targetContainer" class="col-md-6 animated-box">
                         <label class="form-label fw-semibold">เลือกเครื่องปลายทาง:</label>
                         <!-- 3. รหัสเครื่องปลายทาง -->
+                        <div id="selectbox" class="selectbox animated-box">
                         <select id="targetIdSelect" name="target_id" class="form-select">
                             <option value="PAG-01">เครื่องที่ 1 (PAG-01)</option>
                             <option value="PAG-02">เครื่องที่ 2 (PAG-02)</option>
                             <option value="PAG-03">เครื่องที่ 3 (PAG-03)</option>
                             <option value="OTHER">อื่นๆ (ระบุเอง)</option>
                         </select>
-                        <div class="checkboxDropdown">
-                            <button type="submit" class="checkboxDropdownButton">เลือกเครื่อง</button>
+                        </div>
+                        <div class="checkboxDropdown" id="CheckBoxDropdown">
+                            <button class="checkboxDropdownButton" id="toggleDropdown">เลือกเครื่อง
+                                <i id="downpointer" class="fa-solid fa-chevron-down text-muted small chevron-icon" id="chevronIcon"></i>
+                            </button>
                             <div class="checkbox-dropdown-menu" id="checkboxDropdownMenu">
                             <!-- 3.2 รหัสเครื่องปลายทางSome -->
                                 <label><input type="checkbox" name="target_id" value="PG-01">PAG-01</label>

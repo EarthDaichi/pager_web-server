@@ -29,7 +29,7 @@ body {
 /* กรอบเวลาคลิก */
 .form-control:focus, .form-select:focus {
     border-color: var(--kmitl-orange);
-    box-shadow: 0 0 0 0.25rem rgba(255, 95, 0, 0.18);
+    box-shadow: 0 0 0 0.25rem rgba(255, 95, 0, 0.25);
 }
 
 /* ปุ่มกดส้ม KMITL */
@@ -65,4 +65,48 @@ body {
     padding-bottom: 0;
     margin: 0;
     pointer-events: none;
+}
+
+.hide {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0;
+    pointer-events: none;
+}
+
+.checkbox-dropdown-menu {
+    display: none;
+    position: absolute;
+    width: 100%;
+    background: white;
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    padding: 8px 0;
+    z-index: 1000;
+}
+
+.checkboxDropdown {
+    background: #ffffff;
+    border: #000000;
+    border-radius: 5px;
+    height: 60%-2px;
+    outline-style: solid;
+    outline-color: #ced4daa0;
+    padding: 5px;
+    outline-width: 1px;
+    margin-top: -1.5px;
+}
+
+.checkboxDropdownButton {
+    height: 100%;
+    width: 100%;
+    background: #00000000;
+    border: #00000000;
+    
+}
+
+.downpointer {
+    margin-right : auto;
 }
