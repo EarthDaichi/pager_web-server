@@ -30,7 +30,7 @@ export async function startMQTT() {
 
 export function sendMessage(data){
     client.publish(
-            "Pager/webmsg",
+            'Pager/webmsg/',
             (JSON.stringify(data))
         );
     console.log(data);
