@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // [ส่วนที่เพิ่มใหม่: รีเซ็ตสถานะหน้าตา Custom Select เป็นค่าเริ่มต้น]
         resetCustomSelect('sendModeMenu', 'sendModeLabel', 'sendModeSelect', '1_TO_1', 'ส่งเฉพาะรายบุคคล (1:1)');
-        resetCustomSelect('targetIdMenu', 'targetIdLabel', 'targetIdSelect', 'PAG-01', 'เครื่องที่ 1 (PAG-01)');
+        resetCustomSelect('targetIdMenu', 'targetIdLabel', 'targetIdSelect', '001', 'เครื่องที่ 1 (PAG-01)');
 
         sendModeSelect.dispatchEvent(new Event('change'));
     }

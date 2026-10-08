@@ -29,18 +29,10 @@ export async function startMQTT() {
 }
 
 export function sendMessage(data){
-    //const way = ["001","002","003"];
-
-
-
-
-
-
-
-
-
-
-    //client.publish("pager/message", JSON.stringify(data));
+    client.publish(
+            'Pager/webmsg/',
+            (JSON.stringify(data))
+        );
     console.log(data);
     return 1;
 }
